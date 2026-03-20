@@ -1,12 +1,36 @@
-import moment from 'moment'
+import { format } from 'date-fns'
 import { Bar } from 'react-chartjs-2'
-import * as chartjs from 'chart.js'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  type ChartOptions,
+  type ChartData,
+} from 'chart.js'
 
 import { newDataset, RGB } from '../../../lib/chart'
 import * as svk from '../../../lib/svk'
 import * as tibber from '../../../lib/tibber'
 
 import { consumptionHistogram, meanPrice, profileLine } from './Histogram.lib'
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+)
 
 type Props = {
   consumption: tibber.ConsumptionNode[]
@@ -15,67 +39,63 @@ type Props = {
 }
 
 export default function HistogramChart(props: Props) {
-  const options: chartjs.ChartOptions = {
-    tooltips: {
-      callbacks: {
-        label: function (tooltipItem: chartjs.ChartTooltipItem, data: chartjs.ChartData) {
-          switch (tooltipItem.datasetIndex) {
-            case 0:
-            case 1:
-            case 2:
-              return Number(tooltipItem.yLabel).toFixed(2) + '%'
-            case 3:
-              return Number(tooltipItem.yLabel).toFixed(2) + ' SEK/kWh'
-          }
+  const options: ChartOptions<'bar'> = {
+    responsive: true,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            switch (context.datasetIndex) {
+              case 0:
+              case 1:
+              case 2:
+                return Number(context.parsed.y).toFixed(2) + '%'
+              case 3:
+                return Number(context.parsed.y).toFixed(2) + ' SEK/kWh'
+              default:
+                return context.dataset.label + ': ' + Number(context.parsed.y).toFixed(2)
+            }
+          },
         },
       },
     },
     maintainAspectRatio: false,
     scales: {
-      xAxes: [
-        {
-          barPercentage: 1.15,
-          gridLines: {
-            display: false,
-          },
+      x: {
+        grid: {
+          display: false,
         },
-      ],
-      yAxes: [
-        {
-          id: 'Percentage',
-          type: 'linear',
-          position: 'left',
-          ticks: {
-            min: 0,
-          },
-          gridLines: {
-            display: false,
-          },
+      },
+      Percentage: {
+        type: 'linear',
+        position: 'left',
+        min: 0,
+        grid: {
+          display: false,
         },
-        {
-          id: 'SEK/kWh',
-          type: 'linear',
-          position: 'right',
-          ticks: {
-            min: 0,
-          },
-          gridLines: {
-            display: false,
-          },
+      },
+      'SEK/kWh': {
+        type: 'linear',
+        position: 'right',
+        min: 0,
+        grid: {
+          display: false,
         },
-      ],
+      },
     },
   }
 
-  const chartData = (): chartjs.ChartData | undefined => {
+  const chartData = (): ChartData<'bar'> | undefined => {
     const labels: string[] = []
-    const absolutes: number[] = []
     for (let i = 0; i < 24; i++) {
       labels.push(i + ':00')
-      absolutes[i] = 0
     }
 
-    const datasets: chartjs.ChartDataSets[] = []
+    const datasets: any[] = []
     if (props.consumption.length > 0) {
       datasets.push(consumptionHistogram(props.consumption))
     }
@@ -90,7 +110,7 @@ export default function HistogramChart(props: Props) {
         '7': [],
       }
       for (const p of props.profile) {
-        const d = moment(p.time).format('E')
+        const d = format(new Date(p.time), 'i')
         if (!days[d]) days[d] = []
         days[d].push(p)
       }

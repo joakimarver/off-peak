@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import { match } from 'react-router'
-import moment from 'moment'
+import { useParams } from 'react-router-dom'
+import { format } from 'date-fns'
 
 import { useDispatch, useSelector } from '../../lib/hooks'
 
@@ -17,19 +17,17 @@ type Params = {
   id: string
 }
 
-type Props = {
-  match: match<Params>
-}
-
-export default function SnapLoader(props: Props) {
+export default function SnapLoader() {
   const dispatch = useDispatch()
   const snapshotState = useSelector(snapshots.selector)
+  const params = useParams<Params>()
+  const id = params.id!
 
   useEffect(() => {
-    dispatch(snapshots.getOne(props.match.params.id))
-  }, [dispatch, props.match.params.id])
+    dispatch(snapshots.getOne(id))
+  }, [dispatch, id])
 
-  const item = snapshotState.items[props.match.params.id]
+  const item = snapshotState.items[id]
 
   if (item && item.status === 'failed') {
     return <Alert type="oh-no">{item.error}</Alert>
@@ -99,6 +97,5 @@ const homeArea = (priceAreaCode: string): string => {
 }
 
 const dateFmt = (date: string): string => {
-  const m = moment(date)
-  return m.format('YYYY-MM-DD')
+  return format(new Date(date), 'yyyy-MM-dd')
 }

@@ -1,5 +1,5 @@
-import moment from 'moment'
-import * as chartjs from 'chart.js'
+import { getHours } from 'date-fns'
+import type { ChartDataset } from 'chart.js'
 
 import { newDataset, RGB } from '../../../lib/chart'
 import * as svk from '../../../lib/svk'
@@ -7,7 +7,7 @@ import * as tibber from '../../../lib/tibber'
 
 export const consumptionHistogram = (
   consumption: tibber.ConsumptionNode[]
-): chartjs.ChartDataSets => {
+): ChartDataset => {
   const absolutes: number[] = []
   for (let i = 0; i < 24; i++) {
     absolutes[i] = 0
@@ -15,7 +15,7 @@ export const consumptionHistogram = (
 
   let total = 0
   for (const c of consumption) {
-    const timeOfDay = moment(c.from).hour()
+    const timeOfDay = getHours(new Date(c.from))
     const consumed = c.consumption != null ? c.consumption : 0
 
     if (!absolutes[timeOfDay]) absolutes[timeOfDay] = 0
@@ -39,7 +39,7 @@ export const profileLine = (profile: svk.ProfileNode[]): number[] => {
 
   let total = 0
   for (const c of profile) {
-    const timeOfDay = moment(c.time).hour()
+    const timeOfDay = getHours(new Date(c.time))
 
     if (!absolutes[timeOfDay]) absolutes[timeOfDay] = 0
     absolutes[timeOfDay] += c.value

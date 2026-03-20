@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Redirect } from 'react-router'
+import { Navigate } from 'react-router-dom'
 
 import { useSelector } from 'src/lib/hooks'
 import { useDispatch } from '../lib/hooks'
@@ -7,9 +7,7 @@ import { useDispatch } from '../lib/hooks'
 import * as auth from '../lib/auth/reducer'
 import Alert from '../app/components/Alert'
 
-type Props = { location: Location }
-
-export default function Callback(props: Props) {
+export default function Callback() {
   const authState = useSelector(auth.selector)
   const dispatch = useDispatch()
 
@@ -24,6 +22,6 @@ export default function Callback(props: Props) {
   if (!authState.token) {
     return <Alert>Laddar...</Alert>
   } else {
-    return <Redirect to="/homes" />
+    return <Navigate to="/homes" replace />
   }
 }

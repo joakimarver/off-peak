@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect } from 'react'
-import { Redirect } from 'react-router'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 import * as tibber from '../lib/tibber'
 import Alert from '../app/components/Alert'
@@ -8,10 +8,9 @@ import './Homes.css'
 
 import { useDispatch, useSelector } from 'src/lib/hooks'
 
-import { push } from 'connected-react-router'
-
 export default function Homes() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const tibberState = useSelector(tibber.selector)
 
   useEffect(() => {
@@ -22,7 +21,7 @@ export default function Homes() {
 
   const clickedHome = (home: tibber.Home) => {
     const { priceAreaCode, gridAreaCode } = home.meteringPointData
-    dispatch(push(`/homes/${priceAreaCode}/${gridAreaCode}/${home.id}/graphs`))
+    navigate(`/homes/${priceAreaCode}/${gridAreaCode}/${home.id}/graphs`)
   }
 
   if (tibberState.homes.error) {
@@ -40,7 +39,7 @@ export default function Homes() {
     case 1: {
       const home = tibberState.homes.items[0]
       const { priceAreaCode, gridAreaCode } = home.meteringPointData
-      return <Redirect to={`/homes/${priceAreaCode}/${gridAreaCode}/${home.id}/graphs`} />
+      return <Navigate to={`/homes/${priceAreaCode}/${gridAreaCode}/${home.id}/graphs`} replace />
     }
 
     default:

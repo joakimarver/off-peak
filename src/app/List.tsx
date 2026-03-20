@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import CopyToClipboard from 'react-copy-to-clipboard'
-import moment from 'moment'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { format } from 'date-fns'
 
 import * as tibber from '../lib/tibber'
 import * as snapshots from '../lib/snapshots'
@@ -110,6 +110,5 @@ export default function List() {
 }
 
 const dateFormat = (d: string): string => {
-  const m = moment(d)
-  return m.format('YYYY-MM-DD HH:mm')
+  return format(new Date(d), 'yyyy-MM-dd HH:mm')
 }
