@@ -1,14 +1,14 @@
 .snap-view {
-  padding-top: 40px;
+  padding-top: 44px;
 }
 
 .snap-view .header-info {
-  top: 40px;
-  background-color: #188ddc;
+  top: 44px;
+  background: linear-gradient(90deg, #1565c0 0%, #188ddc 100%);
   color: white;
   font-size: 14px;
   text-align: center;
-  padding: 3px 0px;
+  padding: 4px 0px;
   position: fixed;
   width: 100%;
 }

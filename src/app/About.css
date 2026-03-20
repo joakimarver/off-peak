@@ -1,15 +1,18 @@
 .welcome {
   background: #fff;
-  padding: 5px;
+  padding: 10px;
+  border-radius: 6px;
 }
 
 .welcome p {
   max-width: 100%;
+  line-height: 1.6;
 }
 
 @media screen and (min-width: 600px) {
   .welcome {
-    border: 1px solid #ddd;
+    border: 1px solid #e0e0e0;
     max-width: 55%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   }
 }

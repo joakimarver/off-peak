@@ -4,7 +4,16 @@ This tool reads your consumption data on an hour-by-hour interval and calculates
 
 This tool is possible thanks to the wonderful API (and people) at [Tibber](https://sverige.tibber.com/).
 
-The project can be viewed and used on https://offpeak.se
+The project can be viewed and used on https://off-peak.basement.se
+
+## Installing on Proxmox
+
+Off-Peak runs as a single Docker container and is easy to install inside a Proxmox LXC or VM.
+See [proxmox/README.md](proxmox/README.md) for the full guide, or run the one-liner inside your LXC:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/joakimarver/off-peak/main/proxmox/install.sh)
+```
 
 ### Configuring credentials
 
@@ -18,7 +27,7 @@ If building a docker image and testing the production build, use `docker.env` in
 #### Running without credentials
 
 - Start development server, both backend and frontend, see below.
-- Login at https://offpeak.se
+- Login at https://off-peak.basement.se
 - Locate and copy the value of localStorage keys: `access_token`, `expires`
 - Create those localStorage keys on the development server running at http://localhost:3000 and enter the values from the production site.
 

@@ -1,13 +1,15 @@
 .alert {
-  background: #444;
-  box-shadow: 4px 4px 0px #ccc;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), 4px 4px 0px #ccc;
   color: white;
   display: block;
   font-weight: 400;
   margin: 75px auto 20px auto;
   max-width: 700px;
-  padding: 20px 10px;
+  padding: 20px 16px;
   text-align: center;
+  border-radius: 4px;
+  border-left: 4px solid #f5c518;
 }
 
 .alert h2 {
@@ -16,9 +18,11 @@
 }
 
 .alert.oh-no {
-  background: #d55c52;
+  background: linear-gradient(135deg, #c0392b 0%, #96281b 100%);
+  border-left-color: #ff6b5b;
 }
 
 .alert.yeah {
-  background: #6ad568;
+  background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+  border-left-color: #6ad568;
 }

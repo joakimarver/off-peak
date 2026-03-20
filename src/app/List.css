@@ -13,14 +13,18 @@
 .list .btn-view {
   text-decoration: none;
   cursor: pointer;
-  background: #444;
-  padding: 2px 9px;
-  border-radius: 2px;
+  background: linear-gradient(90deg, #0f3460 0%, #16213e 100%);
+  padding: 4px 12px;
+  border-radius: 3px;
   color: white;
+  font-weight: 600;
+  transition: background 0.15s ease, transform 0.1s ease;
 }
 
 .list .btn-view:hover {
-  background-color: #676767;
+  background: linear-gradient(90deg, #f5c518 0%, #f0a500 100%);
+  color: #111;
+  transform: translateY(-1px);
 }
 
 .list .copy-link {
@@ -35,7 +39,7 @@
 .list .popover {
   display: none;
   position: absolute;
-  background: #444;
+  background: #1a1a2e;
   color: white;
   padding: 4px;
   margin: -48px -25px;

@@ -1,9 +1,9 @@
 .graph-view {
-  padding-top: 40px;
+  padding-top: 44px;
 }
 
 .graph-view .header-warn {
-  background-color: #e07313;
+  background: linear-gradient(90deg, #c0392b 0%, #e07313 100%);
   color: white;
   font-size: 14px;
   padding: 5px;
@@ -12,9 +12,9 @@
 }
 
 .graph-view .header-info {
-  top: 40px;
+  top: 44px;
   right: 0px;
-  background-color: #8c8c8c;
+  background: linear-gradient(90deg, #0f3460 0%, #16213e 100%);
   color: white;
   font-size: 14px;
   text-align: center;
@@ -29,6 +29,12 @@
 #BtnSaveSnapshot {
   background: transparent;
   border: none;
-  color: white;
+  color: #f5c518;
   cursor: pointer;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+#BtnSaveSnapshot:hover {
+  color: #ffe04b;
 }

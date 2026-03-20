@@ -6,13 +6,21 @@
 .homes .home {
   display: block;
   max-width: 380px;
-  background-color: #444;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
   color: white;
-  box-shadow: 5px 6px #d2d2d2;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 4px 4px 0px #d2d2d2;
+  border-left: 4px solid #f5c518;
   line-height: 25px;
   cursor: pointer;
-  margin: 10px auto;
+  margin: 12px auto;
   padding: 1px;
+  border-radius: 4px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.homes .home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 197, 24, 0.2), 5px 6px 0px #d2d2d2;
 }
 
 .home .address {
