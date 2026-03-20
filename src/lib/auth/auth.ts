@@ -1,4 +1,4 @@
-import moment from 'moment'
+import { isBefore } from 'date-fns'
 import ClientOAuth2 from 'client-oauth2'
 import { handledFetch } from '../http'
 
@@ -62,8 +62,8 @@ export function isLoggedIn() {
   if (!expStr || expStr === '') return false
 
   // Check for expiry date after current time
-  const expires = moment(expStr)
-  if (expires.isBefore(moment())) {
+  const expires = new Date(expStr)
+  if (isBefore(expires, new Date())) {
     return false
   }
   return true

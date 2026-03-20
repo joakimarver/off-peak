@@ -1,4 +1,4 @@
-import moment from 'moment'
+import { format } from 'date-fns'
 
 import * as tibber from './tibber'
 import * as svk from './svk'
@@ -98,7 +98,7 @@ export function aggregateDays(
   const hourGroup: { [key: string]: Hour[] } = {}
   for (const i in dateIndex) {
     const hour = dateIndex[i]
-    const key = moment(hour.time).format('YYYY-MM-DD')
+    const key = format(hour.time, 'yyyy-MM-dd')
     if (!hourGroup[key]) {
       hourGroup[key] = []
     }

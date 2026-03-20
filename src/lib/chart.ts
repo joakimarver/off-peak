@@ -1,14 +1,14 @@
-import * as chartjs from 'chart.js'
+import type { ChartDataset } from 'chart.js'
 
 export const newDataset = (
   name: string,
   color?: ColorFn,
-  options?: chartjs.ChartDataSets
-): chartjs.ChartDataSets => {
+  options?: Partial<ChartDataset>
+): ChartDataset => {
   if (!color) {
     color = RGB(0, 0, 0)
   }
-  const dataset: chartjs.ChartDataSets = {
+  const dataset: any = {
     type: 'bar',
     label: name,
     backgroundColor: color(0.2),
@@ -16,14 +16,14 @@ export const newDataset = (
     borderWidth: 1,
     hoverBackgroundColor: color(0.4),
     hoverBorderColor: color(1),
-    spanGaps: true,
 
     pointHoverRadius: 5,
     pointHitRadius: 10,
     pointBackgroundColor: color(0.8),
     pointRadius: 0,
+    data: [],
   }
-  return { ...dataset, ...options }
+  return { ...dataset, ...options } as ChartDataset
 }
 
 type ColorFn = (opacity: number) => string

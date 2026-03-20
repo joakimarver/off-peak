@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { match } from 'react-router'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import * as tibber from '../../lib/tibber'
 import * as svk from '../../lib/svk/'
@@ -12,7 +12,6 @@ import * as snapshotStore from '../../lib/snapshots'
 
 import './GraphLoader.css'
 import { useDispatch, useSelector } from 'src/lib/hooks'
-import { push } from 'connected-react-router'
 
 import { DataSourceContext } from './Graphs'
 import { Period, getMonthIntervalFor, getRollingInterval } from './GraphLoader.lib'
@@ -23,27 +22,26 @@ type Params = {
   gridAreaCode: string
 }
 
-type Props = {
-  match: match<Params>
-}
-
-export default function GraphLoader(props: Props) {
+export default function GraphLoader() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [firstLoad, setFirstLoad] = useState(true)
+
+  const params = useParams<Params>()
+  const { gridAreaCode, priceAreaCode, id: homeId } = params
 
   const tibberState = useSelector(tibber.selector)
   const snapshotState = useSelector(snapshotStore.selector)
   const svkState = useSelector(svk.selector)
   const configState = useSelector(config.selector)
 
-  const { gridAreaCode, priceAreaCode } = props.match.params
-  const homeId = props.match.params.id
-
   useEffect(() => {
     dispatch(snapshotStore.reset())
   }, [dispatch])
 
   useEffect(() => {
+    if (!homeId || !gridAreaCode || !priceAreaCode) return
+
     let period: Period
 
     const now = new Date()
@@ -94,9 +92,11 @@ export default function GraphLoader(props: Props) {
     )
 
     setFirstLoad(false)
-  }, [dispatch, homeId, configState.periodType, priceAreaCode])
+  }, [dispatch, homeId, configState.periodType, priceAreaCode, gridAreaCode])
 
   const store = async () => {
+    if (!homeId || !priceAreaCode || !gridAreaCode) return
+
     dispatch(
       snapshotStore.add({
         home: {
@@ -113,10 +113,10 @@ export default function GraphLoader(props: Props) {
 
   useEffect(() => {
     if (snapshotState.addId) {
-      dispatch(push(`/snaps/${snapshotState.addId}/graphs`))
+      navigate(`/snaps/${snapshotState.addId}/graphs`)
       dispatch(snapshotStore.reset())
     }
-  }, [dispatch, snapshotState.addId])
+  }, [dispatch, navigate, snapshotState.addId])
 
   if (
     firstLoad ||

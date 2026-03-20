@@ -1,82 +1,100 @@
-import moment from 'moment'
+import { format } from 'date-fns'
 
 import { Bar } from 'react-chartjs-2'
-import * as chartjs from 'chart.js'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  type ChartOptions,
+  type ChartData,
+} from 'chart.js'
 
 import { newDataset, RGB } from 'src/lib/chart'
 import * as dataprep from 'src/lib/dataprep'
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+)
 
 type Props = {
   days: dataprep.Day[]
 }
 
 export default function ConsumptionChart(props: Props) {
-  const options: chartjs.ChartOptions = {
-    tooltips: {
-      callbacks: {
-        label: function (tooltipItem: chartjs.ChartTooltipItem, data: chartjs.ChartData) {
-          const n = Number(tooltipItem.yLabel).toFixed(2)
-          if (data.datasets === undefined || tooltipItem.datasetIndex === undefined) {
-            return n
-          }
-          const dataset = data.datasets[tooltipItem.datasetIndex]
-          return dataset.label + ': ' + n + ' ' + dataset.yAxisID
+  const options: ChartOptions<'bar'> = {
+    responsive: true,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const n = Number(context.parsed.y).toFixed(2)
+            const dataset = context.dataset
+            const yAxisID = dataset.yAxisID || 'kWh'
+            return dataset.label + ': ' + n + ' ' + yAxisID
+          },
         },
       },
-    },
-    legend: {
-      labels: {
-        filter: (legendItem: chartjs.ChartLegendLabelItem, data: chartjs.ChartData) => {
-          switch (legendItem.datasetIndex) {
-            case 1: // low price
-            case 4: // peak price
-              return null
-            default:
-              return legendItem
-          }
+      legend: {
+        labels: {
+          filter: (legendItem) => {
+            switch (legendItem.datasetIndex) {
+              case 1: // low price
+              case 4: // peak price
+                return false
+              default:
+                return true
+            }
+          },
         },
       },
     },
     maintainAspectRatio: false,
     scales: {
-      xAxes: [
-        {
-          barPercentage: 1.15,
-          gridLines: {
-            display: false,
-          },
+      x: {
+        grid: {
+          display: false,
         },
-      ],
-      yAxes: [
-        {
-          id: 'kWh',
-          type: 'linear',
-          position: 'left',
-          ticks: {
-            min: 0,
-          },
-          gridLines: {
-            display: false,
-          },
+      },
+      kWh: {
+        type: 'linear',
+        position: 'left',
+        min: 0,
+        grid: {
+          display: false,
         },
-        {
-          id: 'SEK/kWh',
-          type: 'linear',
-          position: 'right',
-          ticks: {
-            min: 0,
-          },
-          gridLines: {
-            display: false,
-          },
+      },
+      'SEK/kWh': {
+        type: 'linear',
+        position: 'right',
+        min: 0,
+        grid: {
+          display: false,
         },
-      ],
+      },
     },
   }
 
-  const chartData = (): chartjs.ChartData | undefined => {
+  const chartData = (): ChartData<'bar'> | undefined => {
     const labels: string[] = props.days.map((day) => {
-      return moment(day.startTime).format('DD/MM')
+      return format(new Date(day.startTime), 'dd/MM')
     })
 
     const consumption = newDataset('Konsumtion', RGB(0, 0, 0), {
@@ -119,7 +137,7 @@ export default function ConsumptionChart(props: Props) {
 
     return {
       labels,
-      datasets: [consumption, troughPrice, unitPrice, profiled, peakPrice],
+      datasets: [consumption, troughPrice, unitPrice, profiled, peakPrice] as any,
     }
   }
 
