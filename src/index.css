@@ -14,5 +14,10 @@ code {
 
 a,
 a:hover {
-  color: black;
+  color: #0f3460;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: #f0a500;
 }

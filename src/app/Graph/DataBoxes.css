@@ -41,8 +41,8 @@
 }
 label.currency,
 label.consumption {
-  background: #444;
-  box-shadow: 4px 4px 0px #ccc;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2), 4px 4px 0px #ccc;
   color: white;
   display: block;
   font-weight: 700;
@@ -51,16 +51,17 @@ label.consumption {
   line-height: 50px;
   padding: 4px;
   text-align: center;
+  border-radius: 3px;
 }
 label.hour-cost {
-  background: #2fb8ca;
+  background: linear-gradient(90deg, #0ea5b0 0%, #2fb8ca 100%);
 }
 label.spot-cost {
-  background: #2358dd;
+  background: linear-gradient(90deg, #1a47c2 0%, #2358dd 100%);
 }
 label.nice {
-  background: #6ad568;
+  background: linear-gradient(90deg, #1e8449 0%, #27ae60 100%);
 }
 label.ouch {
-  background: #d55c52;
+  background: linear-gradient(90deg, #c0392b 0%, #d55c52 100%);
 }

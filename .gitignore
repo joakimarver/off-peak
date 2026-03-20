@@ -32,3 +32,5 @@ secrets
 #IntelliJ internal files
 .idea
 sentry.env
+package-lock.json
+yarn.lock

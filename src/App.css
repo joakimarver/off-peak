@@ -3,8 +3,10 @@ header.App-header {
   position: fixed;
   top: 0px;
   width: 100%;
-  height: 40px;
-  background: #444;
+  height: 44px;
+  background: linear-gradient(90deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+  border-bottom: 2px solid #f5c518;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
 header.App-header ul {
@@ -15,14 +17,20 @@ header.App-header ul {
 
 header.App-header li {
   float: left;
-  padding: 0px 10px;
-  line-height: 40px;
+  padding: 0px 12px;
+  line-height: 44px;
 }
 
 header.App-header a {
-  color: white;
+  color: #e8e8e8;
   text-decoration: none;
-  text-shadow: 1px 1px #0000002e;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.15s ease;
+}
+
+header.App-header a:hover {
+  color: #f5c518;
 }
 
 header.App-header li.login,

@@ -11,5 +11,10 @@
 }
 
 .App-header .btn-link {
-  color: white;
+  color: #e8e8e8;
+  transition: color 0.15s ease;
+}
+
+.App-header .btn-link:hover {
+  color: #f5c518;
 }

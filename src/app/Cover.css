@@ -1,7 +1,7 @@
 .cover {
   background-image: url('../assets/graph.png');
-
   background-size: cover;
+  background-position: center;
   height: 100%;
   position: absolute;
   top: 0px;
@@ -11,44 +11,66 @@
   margin: 0px 0;
 }
 
+/* Dark overlay to make content pop */
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10, 14, 35, 0.88) 0%, rgba(6, 30, 60, 0.82) 60%, rgba(0, 0, 0, 0.75) 100%);
+  z-index: -5;
+}
+
 .logo {
-  display: inline-block;
-  width: 250px;
-  height: 210px;
-  padding: 10px;
-  font-size: 70px;
-  background: #444;
-  color: white;
+  position: relative;
+  display: block;
+  width: 260px;
+  height: 220px;
+  padding: 16px;
+  font-size: 72px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+  color: #fff;
   text-transform: uppercase;
   font-weight: 700;
-  display: block;
-  box-shadow: 4px 4px 0px #ccc;
+  letter-spacing: 2px;
+  border-left: 5px solid #f5c518;
+  box-shadow: 0 6px 30px rgba(245, 197, 24, 0.25), 4px 4px 0px rgba(0,0,0,0.4);
+}
+
+.logo::after {
+  content: '⚡';
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+  font-size: 36px;
+  opacity: 0.9;
 }
 
 .onwards {
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .cover a,
 .cover button span {
   text-decoration: none;
-  margin: 4px;
+  margin: 6px 4px;
   display: inline-block;
-  background: #444;
-  color: #ddd;
-  padding: 4px;
-  border-radius: 2px;
-  min-width: 210px;
+  background: linear-gradient(90deg, #f5c518 0%, #f0a500 100%);
+  color: #111;
+  padding: 10px 16px;
+  border-radius: 4px;
+  min-width: 220px;
   text-align: center;
-  box-shadow: 4px 4px 0px #ccc;
-  font-size: 18px;
+  font-size: 17px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(245, 197, 24, 0.35), 3px 3px 0px rgba(0,0,0,0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
-
-/* .cover button {
-} */
 
 .cover a:hover,
 .cover button span:hover {
-  color: #fff;
-  box-shadow: 5px 5px 0px #ccc;
+  background: linear-gradient(90deg, #ffe04b 0%, #f5c518 100%);
+  color: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 197, 24, 0.5), 4px 5px 0px rgba(0,0,0,0.3);
 }
+

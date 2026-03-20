@@ -1,14 +1,20 @@
-version: '3'
+version: '3.8'
 
 services:
   offpeak:
     build:
       context: ./
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     volumes:
-      - ./secrets:/secrets
+      - ./secrets:/secrets:ro
     ports:
-      - 3000:8080
+      - "3000:8080"
     env_file:
       - ./docker.env
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://localhost:8080/healthz || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
